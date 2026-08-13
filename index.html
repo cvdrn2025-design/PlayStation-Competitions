@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turnamen PlayStation 4 Gebyar Kemerdekaan</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #080c14;
+            color: #e6edf3;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #0d1321;
+            border-radius: 12px;
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.15);
+            overflow: hidden;
+            border: 1px solid #1e293b;
+        }
+        /* Header Banner */
+        .header-banner {
+            width: 100%;
+            height: 280px;
+            border-bottom: 2px solid #00f0ff;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.3);
+            cursor: pointer;
+            overflow: hidden;
+        }
+        .header-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .header-banner:hover img {
+            transform: scale(1.02);
+        }
+        .content-body {
+            padding: 25px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #00f0ff;
+            font-size: 2em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+
+        /* NAVIGATION CONTROL BAR */
+        .nav-control-box {
+            background: #111827;
+            padding: 15px 20px;
+            border-radius: 8px;
+            border: 1px solid #00f0ff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
+        }
+        .nav-left-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        /* DROPDOWN STYLES */
+        .custom-select {
+            padding: 10px 15px;
+            background: #080c14;
+            color: #00f0ff;
+            border: 1px solid #00f0ff;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            outline: none;
+            min-width: 240px;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+        }
+        .custom-select option {
+            background: #080c14;
+            color: #e6edf3;
+        }
+
+        /* MATCH CARD DISPLAY */
+        .match-card {
+            background: #111827;
+            border: 1px solid #1e293b;
+            border-left: 4px solid #00f0ff;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            transition: all 0.3s ease;
+        }
+        .match-card:hover {
+            border-color: #00f0ff;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+        .match-info {
+            flex: 1;
+            max-width: 150px;
+        }
+        .match-round {
+            font-size: 11px;
+            color: #8b949e;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .match-title {
+            font-size: 14px;
+            color: #00f0ff;
+            font-weight: bold;
+        }
+
+        /* VS & PLAYER DISPLAY */
+        .versus-container {
+            flex: 3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .player-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 40%;
+        }
+        .player-box.right {
+            flex-direction: row-reverse;
+            text-align: right;
+        }
+        .player-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #00f0ff;
+            box-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
+            cursor: pointer;
+        }
+        .player-name {
+            font-weight: bold;
+            font-size: 14px;
+            color: #e6edf3;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* SCORE INPUT DIGITAL */
+        .score-box-digital {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #080c14;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid #00f0ff;
+        }
+        .score-input {
+            width: 40px;
+            height: 35px;
+            text-align: center;
+            background: transparent;
+            border: none;
+            color: #00ff87;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .score-input:focus {
+            outline: none;
+        }
+        .score-divider {
+            color: #8b949e;
+            font-weight: bold;
+        }
+
+        .match-status {
+            flex: 1.5;
+            text-align: right;
+            font-size: 13px;
+        }
+
+        /* TABLES & BADGES */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: #080c14;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #1e293b;
+        }
+        th, td {
+            border: 1px solid #1e293b;
+            padding: 12px;
+            text-align: left;
+            vertical-align: middle;
+        }
+        th {
+            background-color: #111827;
+            color: #00f0ff;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+        tr:nth-child(even) { background-color: #0d1321; }
+
+        .badge-winner {
+            background: linear-gradient(135deg, #00ff87, #60efff);
+            color: #080c14;
+            padding: 4px 10px;
+            border-radius: 3px;
+            font-size: 0.85em;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(0, 255, 135, 0.4);
+            display: inline-block;
+        }
+
+        /* BUTTONS */
+        .btn-action {
+            padding: 10px 16px;
+            border: 1px solid #00f0ff;
+            background: rgba(0, 240, 255, 0.1);
+            color: #00f0ff;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.25s ease;
+        }
+        .btn-action:hover, .btn-action.active {
+            background: #00f0ff;
+            color: #080c14;
+            box-shadow: 0 0 12px rgba(0, 240, 255, 0.6);
+        }
+        .btn-save {
+            background: linear-gradient(135deg, #00ff87, #00b894);
+            color: #080c14;
+            border-color: #00ff87;
+        }
+        .btn-delete {
+            background: rgba(255, 0, 127, 0.1);
+            color: #ff007f;
+            border: 1px solid #ff007f;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* FORM STYLES */
+        .form-group { margin-bottom: 15px; }
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: #8b949e;
+            font-weight: bold;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            background: #080c14;
+            border: 1px solid #1e293b;
+            border-radius: 4px;
+            color: #e6edf3;
+            font-size: 14px;
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #ff007f, #7928ca);
+            color: white;
+            border: 1px solid #ff007f;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        /* LIGHTBOX MODAL */
+        .lightbox-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(8, 12, 20, 0.92);
+            backdrop-filter: blur(8px);
+            justify-content: center; align-items: center;
+            z-index: 99999;
+        }
+        .lightbox-img {
+            max-width: 90%; max-height: 85vh;
+            border-radius: 8px; border: 2px solid #00f0ff;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+        }
+        .lightbox-close {
+            position: absolute; top: 20px; right: 30px;
+            color: #00f0ff; font-size: 40px; cursor: pointer;
+        }
+        .section-pane { display: none; }
+        .section-pane.active { display: block; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header Banner -->
+    <div class="header-banner" onclick="clickBanner()">
+        <img id="banner-img" src="1786618403975.png" alt="Header Banner" onerror="handleBannerError(this)">
+    </div>
+
+    <div class="content-body">
+        <h1>Turnamen PlayStation 4 Gebyar Kemerdekaan</h1>
+        
+        <!-- CONTROL BAR WITH REGISTRATION BUTTON & COMPETITION DROPDOWN -->
+        <div class="nav-control-box">
+            <div class="nav-left-group">
+                <!-- Tombol Pendaftaran Semula -->
+                <button id="btn-reg-tab" class="btn-action active" onclick="showRegistrationTab()">📝 Pendaftaran Peserta</button>
+                
+                <!-- Dropdown Khusus Jenis Kompetisi -->
+                <select id="competitionSelect" class="custom-select" onchange="selectCompetitionSystem(this.value)">
+                    <option value="" disabled selected>🏆 Pilih Jenis Kompetisi...</option>
+                    <option value="single">⚔️ Sistem Gugur (Single Elimination)</option>
+                    <option value="round-robin">🔄 Setengah Kompetisi (Round Robin)</option>
+                    <option value="double">🛡️ Gugur Ganda (Double Elimination)</option>
+                </select>
+            </div>
+
+            <div id="action-buttons-header">
+                <!-- Action buttons (Save/Shuffle) dimuat dinamis -->
+            </div>
+        </div>
+
+        <!-- 1. FORM PENDAFTARAN PESERTA -->
+        <div id="registration" class="section-pane active">
+            <h2 style="color: #00f0ff; font-size: 1.3em; margin-bottom: 15px;">FORM PENDAFTARAN PESERTA</h2>
+            <form id="regForm" onsubmit="registerParticipant(event)">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label for="nama">Nama Peserta</label>
+                        <input type="text" id="nama" placeholder="Masukkan nama lengkap" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telepon">Nomor Telepon / WA</label>
+                        <input type="tel" id="telepon" placeholder="Contoh: 081234567890" required>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label for="tim">Nama Tim / Klub</label>
+                        <input type="text" id="tim" placeholder="Masukkan nama tim" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="foto">Foto Peserta</label>
+                        <input type="file" id="foto" accept="image/*" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="alamat">Alamat</label>
+                    <textarea id="alamat" rows="2" placeholder="Masukkan alamat lengkap" required></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Daftarkan Peserta Baru</button>
+            </form>
+
+            <h3 style="color: #00f0ff; margin-top: 30px; letter-spacing: 1px;">DAFTAR PESERTA TERDAFTAR</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Foto</th>
+                        <th>Nama Peserta</th>
+                        <th>No. Telp / WA</th>
+                        <th>Alamat</th>
+                        <th>Nama Tim</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="participantList"></tbody>
+            </table>
+        </div>
+
+        <!-- 2. SISTEM GUGUR -->
+        <div id="single" class="section-pane">
+            <h2 style="color: #00f0ff; font-size: 1.3em; margin-bottom: 15px;">PERTANDINGAN SISTEM GUGUR</h2>
+            
+            <div class="match-card">
+                <div class="match-info">
+                    <span class="match-round">Semifinal</span>
+                    <div class="match-title">Partai 1</div>
+                </div>
+                <div class="versus-container">
+                    <div class="player-box">
+                        <img id="s-p1-img1" src="" class="player-avatar" onclick="openLightbox(this.src)">
+                        <span id="s-p1-t1" class="player-name">Gamer A</span>
+                    </div>
+                    <div class="score-box-digital">
+                        <input type="number" id="s-score1-1" class="score-input" value="2" oninput="calculateSingle()">
+                        <span class="score-divider">-</span>
+                        <input type="number" id="s-score1-2" class="score-input" value="1" oninput="calculateSingle()">
+                    </div>
+                    <div class="player-box right">
+                        <img id="s-p1-img2" src="" class="player-avatar" onclick="openLightbox(this.src)">
+                        <span id="s-p1-t2" class="player-name">Gamer B</span>
+                    </div>
+                </div>
+                <div class="match-status" id="single-res-1"></div>
+            </div>
+
+            <div class="match-card">
+                <div class="match-info">
+                    <span class="match-round">Semifinal</span>
+                    <div class="match-title">Partai 2</div>
+                </div>
+                <div class="versus-container">
+                    <div class="player-box">
+                        <img id="s-p2-img1" src="" class="player-avatar" onclick="openLightbox(this.src)">
+                        <span id="s-p2-t1" class="player-name">Gamer C</span>
+                    </div>
+                    <div class="score-box-digital">
+                        <input type="number" id="s-score2-1" class="score-input" value="3" oninput="calculateSingle()">
+                        <span class="score-divider">-</span>
+                        <input type="number" id="s-score2-2" class="score-input" value="0" oninput="calculateSingle()">
+                    </div>
+                    <div class="player-box right">
+                        <img id="s-p2-img2" src="" class="player-avatar" onclick="openLightbox(this.src)">
+                        <span id="s-p2-t2" class="player-name">Gamer D</span>
+                    </div>
+                </div>
+                <div class="match-status" id="single-res-2"></div>
+            </div>
+
+            <h3 style="color: #00f0ff; margin-top: 25px; margin-bottom: 15px;">BABAK GRAND FINAL</h3>
+            <div class="match-card" style="border-left-color: #ff007f;">
+                <div class="match-info">
+                    <span class="match-round" style="color: #ff007f;">Final</span>
+                    <div class="match-title">Grand Final</div>
+                </div>
+                <div class="versus-container">
+                    <div class="player-box">
+                        <img id="s-gf-img1" src="" class="player-avatar" onclick="openLightbox(this.src)">
+                        <span id="s-gf-t1" class="player-name">Finalis 1</span>
+                    </div>
+                    <div class="score-box-digital" style="border-color: #ff007f;">
+                        <input type="number" id="s-scoregf-1" class="score-input" value="2" oninput="calculateSingle()">
+                        <span class="score-divider">-</span>
+                        <input type="number" id="s-scoregf-2" class="score-input" value="1" oninput="calculateSingle()">
+                    </div>
+                    <div class="player-box right">
+                        <img id="s-gf-img2" src="" class="player-avatar" onclick="openLightbox(this.src)">
+                        <span id="s-gf-t2" class="player-name">Finalis 2</span>
+                    </div>
+                </div>
+                <div class="match-status" id="single-gf-res"></div>
+            </div>
+        </div>
+
+        <!-- 3. SETENGAH KOMPETISI -->
+        <div id="round-robin" class="section-pane">
+            <h2 style="color: #00f0ff; font-size: 1.3em; margin-bottom: 15px;">SETENGAH KOMPETISI (ROUND ROBIN)</h2>
+            <div id="rr-matches-cards"></div>
+
+            <h3 style="color: #00f0ff; margin-top: 25px;">KLASEMEN SEMENTARA / AKHIR</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Posisi</th>
+                        <th>Foto</th>
+                        <th>Gamer</th>
+                        <th>Main</th>
+                        <th>Menang</th>
+                        <th>Seri</th>
+                        <th>Kalah</th>
+                        <th>Poin</th>
+                    </tr>
+                </thead>
+                <tbody id="rr-standings-body"></tbody>
+            </table>
+
+            <h3 style="color: #00f0ff; margin-top: 25px; margin-bottom: 15px;">PENENTUAN JUARA (GRAND FINAL)</h3>
+            <div class="match-card" style="border-left-color: #ff007f;">
+                <div class="match-info">
+                    <span class="match-round" style="color: #ff007f;">Final</span>
+                    <div class="match-title">Grand Final</div>
+                </div>
+                <div class="versus-container">
+                    <div class="player-box">
+                        <img id="rr-gf-img1" src="" class="player-avatar" onclick="openLightbox(this.src)">
+                        <span id="rr-gf-t1" class="player-name">Peringkat 1</span>
+                    </div>
+                    <div class="score-box-digital" style="border-color: #ff007f;">
+                        <input type="number" id="rr-scoregf-1" class="score-input" value="1" oninput="calculateRR()">
+                        <span class="score-divider">-</span>
+                        <input type="number" id="rr-scoregf-2" class="score-input" value="0" oninput="calculateRR()">
+                    </div>
+                    <div class="player-box right">
+                        <img id="rr-gf-img2" src="" class="player-avatar" onclick="openLightbox(this.src)">
+                        <span id="rr-gf-t2" class="player-name">Peringkat 2</span>
+                    </div>
+                </div>
+                <div class="match-status" id="rr-gf-res"></div>
+            </div>
+        </div>
+
+        <!-- 4. GUGUR GANDA -->
+        <div id="double" class="section-pane">
+            <h2 style="color: #00f0ff; font-size: 1.3em; margin-bottom: 15px;">PERTANDINGAN GUGUR GANDA</h2>
+            
+            <div class="match-card">
+                <div class="match-info">
+                    <span class="match-round">Upper Bracket</span>
+                    <div class="match-title">UB Semifinal 1</div>
+                </div>
+                <div class="versus-container">
+                    <div class="player-box">
+                        <img id="de-ub1-img1" src="" class="player-avatar" onclick="openLightbox(this.src)">
+                        <span id="de-ub1-t1" class="player-name">Gamer A</span>
+                    </div>
+                    <div class="score-box-digital">
+                        <input type="number" id="de-s-ub1-1" class="score-input" value="2" oninput="calculateDE()">
+                        <span class="score-divider">-</span>
+                        <input type="number" id="de-s-ub1-2" class="score-input" value="0" oninput="calculateDE()">
+                    </div>
+                    <div class="player-box right">
+                        <img id="de-ub1-img2" src="" class="player-avatar" onclick="openLightbox(this.src)">
+                        <span id="de-ub1-t2" class="player-name">Gamer B</span>
+                    </div>
+                </div>
+                <div class="match-status" id="de-res-ub1"></div>
+            </div>
+
+            <div class="match-card">
+                <div class="match-info">
+                    <span class="match-round">Upper Bracket</span>
+                    <div class="match-title">UB Semifinal 2</div>
+                </div>
+                <div class="versus-container">
+                    <div class="player-box">
+                        <img id="de-ub2-img1" src="" class="player-avatar" onclick="openLightbox(this.src)">
+                        <span id="de-ub2-t1" class="player-name">Gamer C</span>
+                    </div>
+                    <div class="score-box-digital">
+                        <input type="number" id="de-s-ub2-1" class="score-input" value="3" oninput="calculateDE()">
+                        <span class="score-divider">-</span>
+                        <input type="number" id="de-s-ub2-2" class="score-input" value="1" oninput="calculateDE()">
+                    </div>
+                    <div class="player-box right">
+                        <img id="de-ub2-img2" src="" class="player-avatar" onclick="openLightbox(this.src)">
+                        <span id="de-ub2-t2" class="player-name">Gamer D</span>
+                    </div>
+                </div>
+                <div class="match-status" id="de-res-ub2"></div>
+            </div>
+
+            <div class="match-card">
+                <div class="match-info">
+                    <span class="match-round">Upper Bracket</span>
+                    <div class="match-title">UB Final</div>
+                </div>
+                <div class="versus-container">
+                    <div class="player-box">
+                        <img id="de-ubf-img1" src="" class="player-avatar" onclick="openLightbox(this.src)">
+                        <span id="de-ubf-t1" class="player-name">-</span>
+                    </div>
+                    <div class="score-box-digital">
+                        <input type="number" id="de-s-ubf-1" class="score-input" value="2" oninput="calculateDE()">
+                        <span class="score-divider">-</span>
+                        <input type="number" id="de-s-ubf-2" class="score-input" value="1" oninput="calculateDE()">
+                    </div>
+                    <div class="player-box right">
+                        <img id="de-ubf-img2" src="" class="player-avatar" onclick="openLightbox(this.src)">
+                        <span id="de-ubf-t2" class="player-name">-</span>
+                    </div>
+                </div>
+                <div class="match-status" id="de-res-ubfinal"></div>
+            </div>
+
+            <div class="match-card">
+                <div class="match-info">
+                    <span class="match-round" style="color:#ff007f">Lower Bracket</span>
+                    <div class="match-title">LB Final</div>
+                </div>
+                <div class="versus-container">
+                    <div class="player-box">
+                        <img id="de-lbf-img1" src="" class="player-avatar" onclick="openLightbox(this.src)">
+                        <span id="de-lbf-t1" class="player-name">-</span>
+                    </div>
+                    <div class="score-box-digital">
+                        <input type="number" id="de-s-lbf-1" class="score-input" value="0" oninput="calculateDE()">
+                        <span class="score-divider">-</span>
+                        <input type="number" id="de-s-lbf-2" class="score-input" value="1" oninput="calculateDE()">
+                    </div>
+                    <div class="player-box right">
+                        <img id="de-lbf-img2" src="" class="player-avatar" onclick="openLightbox(this.src)">
+                        <span id="de-lbf-t2" class="player-name">-</span>
+                    </div>
+                </div>
+                <div class="match-status" id="de-res-lbfinal"></div>
+            </div>
+
+            <h3 style="color: #00f0ff; margin-top: 25px; margin-bottom: 15px;">BABAK GRAND FINAL</h3>
+            <div class="match-card" style="border-left-color: #ff007f;">
+                <div class="match-info">
+                    <span class="match-round" style="color: #ff007f;">Final</span>
+                    <div class="match-title">Grand Final</div>
+                </div>
+                <div class="versus-container">
+                    <div class="player-box">
+                        <img id="de-gf-img1" src="" class="player-avatar" onclick="openLightbox(this.src)">
+                        <span id="de-gf-t1" class="player-name">Juara UB</span>
+                    </div>
+                    <div class="score-box-digital" style="border-color: #ff007f;">
+                        <input type="number" id="de-s-gf-1" class="score-input" value="3" oninput="calculateDE()">
+                        <span class="score-divider">-</span>
+                        <input type="number" id="de-s-gf-2" class="score-input" value="2" oninput="calculateDE()">
+                    </div>
+                    <div class="player-box right">
+                        <img id="de-gf-img2" src="" class="player-avatar" onclick="openLightbox(this.src)">
+                        <span id="de-gf-t2" class="player-name">Juara LB</span>
+                    </div>
+                </div>
+                <div class="match-status" id="de-gf-res"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- LIGHTBOX MODAL -->
+<div id="lightbox" class="lightbox-overlay" onclick="closeLightbox()">
+    <span class="lightbox-close">&times;</span>
+    <img id="lightbox-img" class="lightbox-img" src="" alt="Foto Membesar">
+</div>
+
+<script>
+    const DEFAULT_AVATAR = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80";
+
+    const STORAGE_KEY_PARTICIPANTS = 'ps4_tournament_participants';
+    const STORAGE_KEY_SINGLE = 'ps4_tournament_single';
+    const STORAGE_KEY_RR = 'ps4_tournament_rr';
+    const STORAGE_KEY_DE = 'ps4_tournament_de';
+
+    let participantsData = [];
+
+    /* NAVIGATION LOGIC */
+    function showRegistrationTab() {
+        document.querySelectorAll('.section-pane').forEach(el => el.classList.remove('active'));
+        document.getElementById('registration').classList.add('active');
+        document.getElementById('btn-reg-tab').classList.add('active');
+        document.getElementById('competitionSelect').value = ""; // Reset pilihan dropdown
+        renderHeaderButtons('registration');
+    }
+
+    function selectCompetitionSystem(systemId) {
+        if (!systemId) return;
+        document.querySelectorAll('.section-pane').forEach(el => el.classList.remove('active'));
+        document.getElementById(systemId).classList.add('active');
+        document.getElementById('btn-reg-tab').classList.remove('active');
+        renderHeaderButtons(systemId);
+    }
+
+    function renderHeaderButtons(systemId) {
+        const btnBox = document.getElementById('action-buttons-header');
+        if (systemId === 'registration') {
+            btnBox.innerHTML = `
+                <button class="btn-action btn-save" onclick="saveParticipantsManual()">💾 Simpan Peserta</button>
+                <button class="btn-action" onclick="shuffleRegisteredParticipants()">🔀 Acak Peserta</button>
+            `;
+        } else if (systemId === 'single') {
+            btnBox.innerHTML = `
+                <button class="btn-action btn-save" onclick="saveSingleDataManual()">💾 Simpan Pertandingan</button>
+                <button class="btn-action" onclick="shuffleSingleGamer()">🔀 Acak Peserta SF</button>
+            `;
+        } else if (systemId === 'round-robin') {
+            btnBox.innerHTML = `
+                <button class="btn-action btn-save" onclick="saveRRDataManual()">💾 Simpan Pertandingan</button>
+                <button class="btn-action" onclick="shuffleRR()">🔀 Acak Gamer</button>
+            `;
+        } else if (systemId === 'double') {
+            btnBox.innerHTML = `
+                <button class="btn-action btn-save" onclick="saveDEDataManual()">💾 Simpan Pertandingan</button>
+                <button class="btn-action" onclick="shuffleDE()">🔀 Acak Peserta DE</button>
+            `;
+        }
+    }
+
+    /* LIGHTBOX FUNCTIONS */
+    function handleBannerError(img) {
+        img.src = "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1000&q=80";
+    }
+    function clickBanner() { openLightbox(document.getElementById('banner-img').src); }
+    function openLightbox(src) {
+        if (!src) return;
+        document.getElementById('lightbox-img').src = src;
+        document.getElementById('lightbox').style.display = 'flex';
+    }
+    function closeLightbox() { document.getElementById('lightbox').style.display = 'none'; }
+
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    function getPlayerObj(name) {
+        const found = participantsData.find(p => p.nama.toLowerCase() === name.toLowerCase());
+        if (found) return { nama: found.nama, img: found.imageUrl };
+        return { nama: name, img: DEFAULT_AVATAR };
+    }
+
+    /* REGISTRATION LOGIC */
+    function registerParticipant(e) {
+        e.preventDefault();
+        const nama = document.getElementById('nama').value;
+        const telepon = document.getElementById('telepon').value;
+        const alamat = document.getElementById('alamat').value;
+        const tim = document.getElementById('tim').value;
+        const fotoInput = document.getElementById('foto');
+
+        if (fotoInput.files && fotoInput.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                participantsData.push({ id: Date.now(), nama, telepon, alamat, tim, imageUrl: evt.target.result });
+                saveParticipantsData();
+                renderParticipants();
+                document.getElementById('regForm').reset();
+            }
+            reader.readAsDataURL(fotoInput.files[0]);
+        }
+    }
+
+    function renderParticipants() {
+        const tbody = document.getElementById('participantList');
+        tbody.innerHTML = '';
+        participantsData.forEach((p, index) => {
+            tbody.innerHTML += `
+                <tr>
+                    <td><img src="${p.imageUrl}" class="player-avatar" onclick="openLightbox('${p.imageUrl}')"></td>
+                    <td><strong>${p.nama}</strong></td>
+                    <td>${p.telepon}</td>
+                    <td>${p.alamat}</td>
+                    <td>${p.tim}</td>
+                    <td><button class="btn-delete" onclick="deleteParticipant(${index})">Hapus</button></td>
+                </tr>
+            `;
+        });
+    }
+
+    function deleteParticipant(index) {
+        if (confirm("Hapus peserta ini?")) {
+            participantsData.splice(index, 1);
+            saveParticipantsData();
+            renderParticipants();
+        }
+    }
+    function saveParticipantsData() { localStorage.setItem(STORAGE_KEY_PARTICIPANTS, JSON.stringify(participantsData)); }
+    function saveParticipantsManual() { saveParticipantsData(); alert("✅ Data peserta disimpan!"); }
+    function loadParticipantsData() {
+        const saved = localStorage.getItem(STORAGE_KEY_PARTICIPANTS);
+        if (saved) { participantsData = JSON.parse(saved); renderParticipants(); }
+    }
+    function shuffleRegisteredParticipants() {
+        if (participantsData.length < 2) return alert('Daftarkan minimal 2 peserta!');
+        shuffle(participantsData); saveParticipantsData(); renderParticipants();
+    }
+
+    /* 1. SINGLE ELIMINATION LOGIC */
+    let singleGamers = ['Gamer A', 'Gamer B', 'Gamer C', 'Gamer D'];
+
+    function shuffleSingleGamer() {
+        singleGamers = shuffle([...singleGamers]);
+        calculateSingle();
+    }
+
+    function calculateSingle() {
+        const p1 = getPlayerObj(singleGamers[0]);
+        const p2 = getPlayerObj(singleGamers[1]);
+        const p3 = getPlayerObj(singleGamers[2]);
+        const p4 = getPlayerObj(singleGamers[3]);
+
+        document.getElementById('s-p1-t1').textContent = p1.nama; document.getElementById('s-p1-img1').src = p1.img;
+        document.getElementById('s-p1-t2').textContent = p2.nama; document.getElementById('s-p1-img2').src = p2.img;
+        document.getElementById('s-p2-t1').textContent = p3.nama; document.getElementById('s-p2-img1').src = p3.img;
+        document.getElementById('s-p2-t2').textContent = p4.nama; document.getElementById('s-p2-img2').src = p4.img;
+
+        const s1_1 = parseInt(document.getElementById('s-score1-1').value) || 0;
+        const s1_2 = parseInt(document.getElementById('s-score1-2').value) || 0;
+        const win1 = s1_1 >= s1_2 ? p1 : p2;
+
+        const s2_1 = parseInt(document.getElementById('s-score2-1').value) || 0;
+        const s2_2 = parseInt(document.getElementById('s-score2-2').value) || 0;
+        const win2 = s2_1 >= s2_2 ? p3 : p4;
+
+        document.getElementById('single-res-1').innerHTML = `<span class="badge-winner">${win1.nama} Menang</span>`;
+        document.getElementById('single-res-2').innerHTML = `<span class="badge-winner">${win2.nama} Menang</span>`;
+
+        document.getElementById('s-gf-t1').textContent = win1.nama; document.getElementById('s-gf-img1').src = win1.img;
+        document.getElementById('s-gf-t2').textContent = win2.nama; document.getElementById('s-gf-img2').src = win2.img;
+
+        const sgf_1 = parseInt(document.getElementById('s-scoregf-1').value) || 0;
+        const sgf_2 = parseInt(document.getElementById('s-scoregf-2').value) || 0;
+        const juara1 = sgf_1 >= sgf_2 ? win1.nama : win2.nama;
+
+        document.getElementById('single-gf-res').innerHTML = `<span class="badge-winner">🏆 Juara 1: ${juara1}</span>`;
+        autoSaveSingle();
+    }
+
+    function autoSaveSingle() {
+        const singleData = {
+            gamers: singleGamers,
+            scores: {
+                s1_1: document.getElementById('s-score1-1').value, s1_2: document.getElementById('s-score1-2').value,
+                s2_1: document.getElementById('s-score2-1').value, s2_2: document.getElementById('s-score2-2').value,
+                sgf_1: document.getElementById('s-scoregf-1').value, sgf_2: document.getElementById('s-scoregf-2').value,
+            }
+        };
+        localStorage.setItem(STORAGE_KEY_SINGLE, JSON.stringify(singleData));
+    }
+    function saveSingleDataManual() { autoSaveSingle(); alert("✅ Pertandingan Sistem Gugur Disimpan!"); }
+
+    function loadSingleData() {
+        const saved = localStorage.getItem(STORAGE_KEY_SINGLE);
+        if (saved) {
+            const data = JSON.parse(saved);
+            singleGamers = data.gamers || singleGamers;
+            if (data.scores) {
+                document.getElementById('s-score1-1').value = data.scores.s1_1;
+                document.getElementById('s-score1-2').value = data.scores.s1_2;
+                document.getElementById('s-score2-1').value = data.scores.s2_1;
+                document.getElementById('s-score2-2').value = data.scores.s2_2;
+                document.getElementById('s-scoregf-1').value = data.scores.sgf_1;
+                document.getElementById('s-scoregf-2').value = data.scores.sgf_2;
+            }
+        }
+        calculateSingle();
+    }
+
+    /* 2. ROUND ROBIN LOGIC */
+    let rrGamers = ['Gamer A', 'Gamer B', 'Gamer C', 'Gamer D'];
+    let rrScores = Array(6).fill().map(() => ({ s1: 1, s2: 0 }));
+
+    function renderRRMatches() {
+        const matches = [
+            { p: 'Pekan 1', t1: rrGamers[0], t2: rrGamers[1], idx: 0 },
+            { p: 'Pekan 1', t1: rrGamers[2], t2: rrGamers[3], idx: 1 },
+            { p: 'Pekan 2', t1: rrGamers[0], t2: rrGamers[2], idx: 2 },
+            { p: 'Pekan 2', t1: rrGamers[1], t2: rrGamers[3], idx: 3 },
+            { p: 'Pekan 3', t1: rrGamers[0], t2: rrGamers[3], idx: 4 },
+            { p: 'Pekan 3', t1: rrGamers[1], t2: rrGamers[2], idx: 5 },
+        ];
+
+        const container = document.getElementById('rr-matches-cards');
+        container.innerHTML = '';
+
+        matches.forEach(m => {
+            const p1 = getPlayerObj(m.t1);
+            const p2 = getPlayerObj(m.t2);
+            container.innerHTML += `
+                <div class="match-card">
+                    <div class="match-info">
+                        <span class="match-round">${m.p}</span>
+                        <div class="match-title">Match ${m.idx + 1}</div>
+                    </div>
+                    <div class="versus-container">
+                        <div class="player-box">
+                            <img src="${p1.img}" class="player-avatar" onclick="openLightbox(this.src)">
+                            <span class="player-name">${p1.nama}</span>
+                        </div>
+                        <div class="score-box-digital">
+                            <input type="number" class="score-input" value="${rrScores[m.idx].s1}" oninput="updateRRScore(${m.idx}, 1, this.value)">
+                            <span class="score-divider">-</span>
+                            <input type="number" class="score-input" value="${rrScores[m.idx].s2}" oninput="updateRRScore(${m.idx}, 2, this.value)">
+                        </div>
+                        <div class="player-box right">
+                            <img src="${p2.img}" class="player-avatar" onclick="openLightbox(this.src)">
+                            <span class="player-name">${p2.nama}</span>
+                        </div>
+                    </div>
+                    <div class="match-status"></div>
+                </div>
+            `;
+        });
+        calculateRR();
+    }
+
+    function updateRRScore(idx, teamNum, val) {
+        if (teamNum === 1) rrScores[idx].s1 = parseInt(val) || 0;
+        else rrScores[idx].s2 = parseInt(val) || 0;
+        calculateRR();
+    }
+
+    function shuffleRR() {
+        rrGamers = shuffle([...rrGamers]);
+        renderRRMatches();
+    }
+
+    function calculateRR() {
+        const stats = {};
+        rrGamers.forEach(g => stats[g] = { main: 0, menang: 0, seri: 0, kalah: 0, poin: 0 });
+
+        const matchList = [
+            [rrGamers[0], rrGamers[1]], [rrGamers[2], rrGamers[3]],
+            [rrGamers[0], rrGamers[2]], [rrGamers[1], rrGamers[3]],
+            [rrGamers[0], rrGamers[3]], [rrGamers[1], rrGamers[2]]
+        ];
+
+        matchList.forEach((pair, idx) => {
+            const t1 = pair[0], t2 = pair[1];
+            const s1 = rrScores[idx].s1, s2 = rrScores[idx].s2;
+            stats[t1].main++; stats[t2].main++;
+            if (s1 > s2) { stats[t1].menang++; stats[t1].poin += 3; stats[t2].kalah++; }
+            else if (s2 > s1) { stats[t2].menang++; stats[t2].poin += 3; stats[t1].kalah++; }
+            else { stats[t1].seri++; stats[t1].poin += 1; stats[t2].seri++; stats[t2].poin += 1; }
+        });
+
+        const sorted = Object.keys(stats).map(g => ({ name: g, ...stats[g] })).sort((a, b) => b.poin - a.poin);
+        const tbody = document.getElementById('rr-standings-body');
+        tbody.innerHTML = '';
+        sorted.forEach((item, i) => {
+            const pObj = getPlayerObj(item.name);
+            tbody.innerHTML += `
+                <tr>
+                    <td>${i + 1}</td>
+                    <td><img src="${pObj.img}" class="player-avatar"></td>
+                    <td><strong>${pObj.nama}</strong></td>
+                    <td>${item.main}</td>
+                    <td>${item.menang}</td>
+                    <td>${item.seri}</td>
+                    <td>${item.kalah}</td>
+                    <td><strong style="color:#00f0ff">${item.poin}</strong></td>
+                </tr>
+            `;
+        });
+
+        const top1 = getPlayerObj(sorted[0].name);
+        const top2 = getPlayerObj(sorted[1].name);
+
+        document.getElementById('rr-gf-t1').textContent = top1.nama; document.getElementById('rr-gf-img1').src = top1.img;
+        document.getElementById('rr-gf-t2').textContent = top2.nama; document.getElementById('rr-gf-img2').src = top2.img;
+
+        const rrgf_1 = parseInt(document.getElementById('rr-scoregf-1').value) || 0;
+        const rrgf_2 = parseInt(document.getElementById('rr-scoregf-2').value) || 0;
+        const juara1 = rrgf_1 >= rrgf_2 ? top1.nama : top2.nama;
+
+        document.getElementById('rr-gf-res').innerHTML = `<span class="badge-winner">🏆 Juara 1: ${juara1}</span>`;
+        autoSaveRR();
+    }
+
+    function autoSaveRR() {
+        const rrData = {
+            gamers: rrGamers, scores: rrScores,
+            gfScore1: document.getElementById('rr-scoregf-1').value,
+            gfScore2: document.getElementById('rr-scoregf-2').value,
+        };
+        localStorage.setItem(STORAGE_KEY_RR, JSON.stringify(rrData));
+    }
+    function saveRRDataManual() { autoSaveRR(); alert("✅ Data Setengah Kompetisi Disimpan!"); }
+
+    function loadRRData() {
+        const saved = localStorage.getItem(STORAGE_KEY_RR);
+        if (saved) {
+            const data = JSON.parse(saved);
+            rrGamers = data.gamers || rrGamers;
+            rrScores = data.scores || rrScores;
+            if (data.gfScore1 !== undefined) document.getElementById('rr-scoregf-1').value = data.gfScore1;
+            if (data.gfScore2 !== undefined) document.getElementById('rr-scoregf-2').value = data.gfScore2;
+        }
+        renderRRMatches();
+    }
+
+    /* 3. DOUBLE ELIMINATION LOGIC */
+    let deGamers = ['Gamer A', 'Gamer B', 'Gamer C', 'Gamer D'];
+
+    function shuffleDE() { deGamers = shuffle([...deGamers]); calculateDE(); }
+
+    function calculateDE() {
+        const p1 = getPlayerObj(deGamers[0]);
+        const p2 = getPlayerObj(deGamers[1]);
+        const p3 = getPlayerObj(deGamers[2]);
+        const p4 = getPlayerObj(deGamers[3]);
+
+        document.getElementById('de-ub1-t1').textContent = p1.nama; document.getElementById('de-ub1-img1').src = p1.img;
+        document.getElementById('de-ub1-t2').textContent = p2.nama; document.getElementById('de-ub1-img2').src = p2.img;
+        document.getElementById('de-ub2-t1').textContent = p3.nama; document.getElementById('de-ub2-img1').src = p3.img;
+        document.getElementById('de-ub2-t2').textContent = p4.nama; document.getElementById('de-ub2-img2').src = p4.img;
+
+        // UB Semis 1
+        const ub1_s1 = parseInt(document.getElementById('de-s-ub1-1').value) || 0;
+        const ub1_s2 = parseInt(document.getElementById('de-s-ub1-2').value) || 0;
+        const ub1Win = ub1_s1 >= ub1_s2 ? p1 : p2;
+        const ub1Lose = ub1_s1 >= ub1_s2 ? p2 : p1;
+        document.getElementById('de-res-ub1').innerHTML = `<span class="badge-winner">${ub1Win.nama} Win</span>`;
+
+        // UB Semis 2
+        const ub2_s1 = parseInt(document.getElementById('de-s-ub2-1').value) || 0;
+        const ub2_s2 = parseInt(document.getElementById('de-s-ub2-2').value) || 0;
+        const ub2Win = ub2_s1 >= ub2_s2 ? p3 : p4;
+        const ub2Lose = ub2_s1 >= ub2_s2 ? p4 : p3;
+        document.getElementById('de-res-ub2').innerHTML = `<span class="badge-winner">${ub2Win.nama} Win</span>`;
+
+        // UB Final
+        document.getElementById('de-ubf-t1').textContent = ub1Win.nama; document.getElementById('de-ubf-img1').src = ub1Win.img;
+        document.getElementById('de-ubf-t2').textContent = ub2Win.nama; document.getElementById('de-ubf-img2').src = ub2Win.img;
+        const ubf_s1 = parseInt(document.getElementById('de-s-ubf-1').value) || 0;
+        const ubf_s2 = parseInt(document.getElementById('de-s-ubf-2').value) || 0;
+        const ubfWin = ubf_s1 >= ubf_s2 ? ub1Win : ub2Win;
+        const ubfLose = ubf_s1 >= ubf_s2 ? ub2Win : ub1Win;
+        document.getElementById('de-res-ubfinal').innerHTML = `<span class="badge-winner">${ubfWin.nama} ke Final</span>`;
+
+        // LB Final
+        document.getElementById('de-lbf-t1').textContent = ubfLose.nama; document.getElementById('de-lbf-img1').src = ubfLose.img;
+        document.getElementById('de-lbf-t2').textContent = ub1Lose.nama; document.getElementById('de-lbf-img2').src = ub1Lose.img;
+        const lbf_s1 = parseInt(document.getElementById('de-s-lbf-1').value) || 0;
+        const lbf_s2 = parseInt(document.getElementById('de-s-lbf-2').value) || 0;
+        const lbfWin = lbf_s1 >= lbf_s2 ? ubfLose : ub1Lose;
+        document.getElementById('de-res-lbfinal').innerHTML = `<span class="badge-winner">${lbfWin.nama} ke Final</span>`;
+
+        // Grand Final
+        document.getElementById('de-gf-t1').textContent = ubfWin.nama; document.getElementById('de-gf-img1').src = ubfWin.img;
+        document.getElementById('de-gf-t2').textContent = lbfWin.nama; document.getElementById('de-gf-img2').src = lbfWin.img;
+
+        const degf_s1 = parseInt(document.getElementById('de-s-gf-1').value) || 0;
+        const degf_s2 = parseInt(document.getElementById('de-s-gf-2').value) || 0;
+        const juara1 = degf_s1 >= degf_s2 ? ubfWin.nama : lbfWin.nama;
+
+        document.getElementById('de-gf-res').innerHTML = `<span class="badge-winner">🏆 Juara 1: ${juara1}</span>`;
+        autoSaveDE();
+    }
+
+    function autoSaveDE() {
+        const deData = {
+            gamers: deGamers,
+            scores: {
+                ub1_1: document.getElementById('de-s-ub1-1').value, ub1_2: document.getElementById('de-s-ub1-2').value,
+                ub2_1: document.getElementById('de-s-ub2-1').value, ub2_2: document.getElementById('de-s-ub2-2').value,
+                ubf_1: document.getElementById('de-s-ubf-1').value, ubf_2: document.getElementById('de-s-ubf-2').value,
+                lbf_1: document.getElementById('de-s-lbf-1').value, lbf_2: document.getElementById('de-s-lbf-2').value,
+                degf_1: document.getElementById('de-s-gf-1').value, degf_2: document.getElementById('de-s-gf-2').value,
+            }
+        };
+        localStorage.setItem(STORAGE_KEY_DE, JSON.stringify(deData));
+    }
+    function saveDEDataManual() { autoSaveDE(); alert("✅ Pertandingan Gugur Ganda Disimpan!"); }
+
+    function loadDEData() {
+        const saved = localStorage.getItem(STORAGE_KEY_DE);
+        if (saved) {
+            const data = JSON.parse(saved);
+            deGamers = data.gamers || deGamers;
+            if (data.scores) {
+                document.getElementById('de-s-ub1-1').value = data.scores.ub1_1; document.getElementById('de-s-ub1-2').value = data.scores.ub1_2;
+                document.getElementById('de-s-ub2-1').value = data.scores.ub2_1; document.getElementById('de-s-ub2-2').value = data.scores.ub2_2;
+                document.getElementById('de-s-ubf-1').value = data.scores.ubf_1; document.getElementById('de-s-ubf-2').value = data.scores.ubf_2;
+                document.getElementById('de-s-lbf-1').value = data.scores.lbf_1; document.getElementById('de-s-lbf-2').value = data.scores.lbf_2;
+                document.getElementById('de-s-gf-1').value = data.scores.degf_1; document.getElementById('de-s-gf-2').value = data.scores.degf_2;
+            }
+        }
+        calculateDE();
+    }
+
+    // INIT PAGE ON LOAD
+    window.addEventListener('DOMContentLoaded', () => {
+        loadParticipantsData();
+        loadSingleData();
+        loadRRData();
+        loadDEData();
+        renderHeaderButtons('registration');
+    });
+</script>
+
+</body>
+</html>
+
