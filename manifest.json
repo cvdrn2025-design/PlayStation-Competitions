@@ -1,6 +1,6 @@
 {
-  "name": "Drawing Match PlayStation Competitions",
-  "short_name": "Drawing Match",
+  "name": "drawing match playstation competitions",
+  "short_name": "drawing match",
   "id": "https://cvdrn2025-design.github.io/PlayStation-Competitions/",
   "start_url": "https://cvdrn2025-design.github.io/PlayStation-Competitions/",
   "scope": "https://cvdrn2025-design.github.io/PlayStation-Competitions/",
@@ -10,7 +10,7 @@
   "theme_color": "#ffffff",
   "dir": "ltr",
   "lang": "id",
-  "description": "Aplikasi untuk mengatur kompetisi PlayStation",
+  "description": "aplikasi untuk mengatur kompetisi playstation",
   "categories": [
     "events"
   ],
