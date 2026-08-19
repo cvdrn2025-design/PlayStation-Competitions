@@ -1,0 +1,17 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "fullscreen",
+  "name": "Drawimg Match PlayStation Competitions",
+  "orientation": "any",
+  "scope": "/https://cvdrn2025-design.github.io/PlayStation-Competitions/",
+  "short_name": "Drawing Match",
+  "start_url": "/https://cvdrn2025-design.github.io/PlayStation-Competitions/",
+  "theme_color": "#ffffff",
+  "id": "APK-DrawingMatch",
+  "description": "Aplikasi untuk mengatur kompetisi PlayStation",
+  "lang": "id",
+  "categories": [
+    "events"
+  ]
+}
