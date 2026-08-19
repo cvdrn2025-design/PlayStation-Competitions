@@ -1,22 +1,22 @@
 {
-  "name": "drawing match playstation competitions",
-  "short_name": "drawing match",
-  "id": "https://cvdrn2025-design.github.io/PlayStation-Competitions/",
-  "start_url": "https://cvdrn2025-design.github.io/PlayStation-Competitions/",
-  "scope": "https://cvdrn2025-design.github.io/PlayStation-Competitions/",
+  "name": "Drawing Match PlayStation Competitions",
+  "short_name": "Drawing Match",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "orientation": "any",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
   "dir": "ltr",
   "lang": "id",
-  "description": "aplikasi untuk mengatur kompetisi playstation",
+  "description": "Aplikasi untuk mengatur kompetisi PlayStation",
   "categories": [
     "events"
   ],
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "icon-512.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
@@ -27,22 +27,5 @@
       "type": "image/png",
       "purpose": "any maskable"
     }
-  ],
-  "screenshots": [
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "form_factor": "wide",
-      "label": "Tampilan Utama"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "Tampilan Mobile"
-    }
   ]
 }
-
