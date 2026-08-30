@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Generator Lisensi</title>
+</head>
+<body>
+    <h2>Generator Kode Lisensi Firebase</h2>
+    
+    <div>
+        <label>Jumlah Lisensi yang Dibuat:</label>
+        <input type="number" id="totalLicenses" value="10" min="1" max="100">
+        <br><br>
+        <button onclick="generateLicenses()">Generate Lisensi</button>
+    </div>
+    
+    <div id="result"></div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+    <script>
+        // KONFIGURASI FIREBASE (SAMA SEPERTI DI KODE UTAMA)
+        const firebaseConfig = {
+            apiKey: "AIzaSyCMvemJTlb6fy5D_s8hL9wGWxZmsZ096jE",
+            authDomain: "drawing-match-ac69a.firebaseapp.com",
+            databaseURL: "https://drawing-match-ac69a-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "drawing-match-ac69a",
+            storageBucket: "drawing-match-ac69a.firebasestorage.app",
+            messagingSenderId: "22800670068",
+            appId: "1:22800670068:web:6bc373b99331c8e0bca021"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        function generateLicenses() {
+            const total = parseInt(document.getElementById('totalLicenses').value);
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Proses pembuatan lisensi...';
+
+            const generatedKeys = [];
+
+            for (let i = 0; i < total; i++) {
+                // Format: UTIL-KEY-XXXX (random 4 digit)
+                const randomNum = Math.floor(1000 + Math.random() * 9000);
+                const licenseKey = `UTIL-KEY-${randomNum}`;
+                generatedKeys.push(licenseKey);
+            }
+
+            // Cek duplikat
+            const uniqueKeys = [...new Set(generatedKeys)];
+
+            // Simpan ke Firebase
+            const updates = {};
+            uniqueKeys.forEach(key => {
+                updates[`licenses/${key}`] = {
+                    status: "active",
+                    activated_at: null
+                };
+            });
+
+            db.ref().update(updates)
+                .then(() => {
+                    let html = '<h3>✅ Lisensi Berhasil Dibuat!</h3>';
+                    html += '<table border="1" style="margin-top:20px; border-collapse:collapse;">';
+                    html += '<tr><th>No</th><th>Kode Lisensi</th><th>Status</th></tr>';
+                    
+                    uniqueKeys.forEach((key, index) => {
+                        html += `<tr>
+                            <td>${index + 1}</td>
+                            <td><code style="background:#f0f0f0; padding:5px;">${key}</code></td>
+                            <td style="color:green;">ACTIVE</td>
+                        </tr>`;
+                    });
+
+                    html += '</table>';
+                    resultDiv.innerHTML = html;
+                })
+                .catch(error => {
+                    resultDiv.innerHTML = `❌ Error: ${error.message}`;
+                    console.error(error);
+                });
+        }
+    </script>
+</body>
+</html>
