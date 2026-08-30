@@ -2,87 +2,797 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Generator Lisensi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Kode Lisensi - Admin Panel</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .admin-panel {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 30px;
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #764ba2;
+            padding-bottom: 20px;
+        }
+        
+        .header h1 {
+            color: #764ba2;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .form-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 10px rgba(118, 75, 162, 0.1);
+        }
+        
+        .btn-generate {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        
+        .btn-generate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(118, 75, 162, 0.3);
+        }
+        
+        .btn-generate:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .result-section {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            background: #28a745;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .result-header h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+        
+        .result-body {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        th {
+            background: #764ba2;
+            color: white;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+        
+        tr:hover {
+            background: #e9ecef;
+        }
+        
+        .license-code {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid #90caf9;
+        }
+        
+        .license-code:hover {
+            background: #1976d2;
+            color: white;
+        }
+        
+        .license-code.copied {
+            background: #28a745;
+            color: white;
+            border-color: #28a745;
+        }
+        
+        .btn-copy-all {
+            background: #17a2b8;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: all 0.3s;
+        }
+        
+        .btn-copy-all:hover {
+            background: #138496;
+        }
+        
+        .btn-download {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-download:hover {
+            background: #218838;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+        }
+        
+        .stat-card .number {
+            font-size: 24px;
+            font-weight: 700;
+            color: #764ba2;
+        }
+        
+        .stat-card .label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #764ba2;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .info-box {
+            background: #d1ecf1;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        
+        .toggle-password {
+            position: relative;
+        }
+        
+        .toggle-password input {
+            padding-right: 40px;
+        }
+        
+        .toggle-password span {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .admin-only {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .admin-only label {
+            color: #856404;
+            font-weight: bold;
+        }
+        
+        .checkbox-group {
+            margin: 10px 0;
+        }
+        
+        .checkbox-group label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+        }
+        
+        .format-select {
+            margin-bottom: 15px;
+        }
+        
+        .format-select select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .preview-box {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+    </style>
 </head>
 <body>
-    <h2>Generator Kode Lisensi Firebase</h2>
-    
-    <div>
-        <label>Jumlah Lisensi yang Dibuat:</label>
-        <input type="number" id="totalLicenses" value="10" min="1" max="100">
-        <br><br>
-        <button onclick="generateLicenses()">Generate Lisensi</button>
+
+<div class="admin-panel">
+    <div class="header">
+        <h1>🔐 Generator Kode Lisensi</h1>
+        <p>Panel Administrasi - Buat Lisensi Aplikasi Turnamen PS4</p>
     </div>
-    
-    <div id="result"></div>
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <!-- Admin Password Protection -->
+    <div class="admin-only">
+        <label>🔒 Password Admin:</label>
+        <input type="password" id="adminPassword" placeholder="Masukkan password admin" style="margin-top:10px;">
+        <p style="font-size:12px; color:#856404; margin-top:5px;">Default: admin123 (ubah di kode)</p>
+    </div>
 
-    <script>
-        // KONFIGURASI FIREBASE (SAMA SEPERTI DI KODE UTAMA)
-        const firebaseConfig = {
-            apiKey: "AIzaSyCMvemJTlb6fy5D_s8hL9wGWxZmsZ096jE",
-            authDomain: "drawing-match-ac69a.firebaseapp.com",
-            databaseURL: "https://drawing-match-ac69a-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "drawing-match-ac69a",
-            storageBucket: "drawing-match-ac69a.firebasestorage.app",
-            messagingSenderId: "22800670068",
-            appId: "1:22800670068:web:6bc373b99331c8e0bca021"
-        };
+    <div class="form-section">
+        <div class="form-group">
+            <label>Jumlah Lisensi yang Dibuat:</label>
+            <input type="number" id="totalLicenses" value="10" min="1" max="100">
+        </div>
+        
+        <div class="format-select">
+            <label>Format Kode Lisensi:</label>
+            <select id="licenseFormat" onchange="previewFormat()">
+                <option value="UTIL-KEY-####">UTIL-KEY-#### (Contoh: UTIL-KEY-1234)</option>
+                <option value="PS4-####-2024">PS4-####-2024 (Contoh: PS4-1234-2024)</option>
+                <option value="TURNAMEN-#######">TURNAMEN-####### (Contoh: TURNAMEN-1234567)</option>
+                <option value="CUSTOM">Custom (Tulis sendiri)</option>
+            </select>
+        </div>
+        
+        <div id="customFormatBox" style="display:none;">
+            <div class="form-group">
+                <label>Custom Format (gunakan # untuk angka random):</label>
+                <input type="text" id="customFormat" value="PS4-2024-####" placeholder="Contoh: PS4-2024-####">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label>Prefix / Awal Kode:</label>
+            <input type="text" id="licensePrefix" value="UTIL-KEY" placeholder="Contoh: UTIL-KEY">
+            <p style="font-size:12px; color:#666; margin-top:5px;">Bagian awal sebelum angka random</p>
+        </div>
+        
+        <div class="checkbox-group">
+            <label>
+                <input type="checkbox" id="useUppercase" checked>
+                Gunakan Huruf Kapital (UPPERCASE)
+            </label>
+        </div>
+        
+        <div class="checkbox-group">
+            <label>
+                <input type="checkbox" id="enableBatch" checked>
+                Buat Sekaligus dalam Jumlah Banyak
+            </label>
+        </div>
+        
+        <div class="preview-box" id="formatPreview">
+            Contoh hasil: UTIL-KEY-1234
+        </div>
+        
+        <button class="btn-generate" id="btnGenerate" onclick="generateLicenses()">
+            🚀 Generate Lisensi Sekarang
+        </button>
+    </div>
 
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
+    <div class="loading" id="loadingIndicator">
+        <div class="spinner"></div>
+        <p>Sedang membuat lisensi ke Firebase...</p>
+    </div>
 
-        function generateLicenses() {
-            const total = parseInt(document.getElementById('totalLicenses').value);
-            const resultDiv = document.getElementById('result');
-            resultDiv.innerHTML = 'Proses pembuatan lisensi...';
+    <div class="error-message" id="errorMessage"></div>
+    <div class="success-message" id="successMessage"></div>
 
-            const generatedKeys = [];
+    <div class="result-section" id="resultSection">
+        <div class="result-header">
+            <h3>✅ Lisensi Berhasil Dibuat!</h3>
+            <div style="display:flex; gap:10px;">
+                <button class="btn-copy-all" onclick="copyAllLicenses()">📋 Copy Semua</button>
+                <button class="btn-download" onclick="downloadLicenses()">💾 Download JSON</button>
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <div class="number" id="totalCreated">0</div>
+                <div class="label">Total Dibuat</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="activeCount">0</div>
+                <div class="label">Status Active</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="generatedCount">0</div>
+                <div class="label">Kode Unik</div>
+            </div>
+        </div>
+        
+        <div class="result-body">
+            <table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Kode Lisensi</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="licenseTableBody"></tbody>
+            </table>
+        </div>
+    </div>
 
-            for (let i = 0; i < total; i++) {
-                // Format: UTIL-KEY-XXXX (random 4 digit)
-                const randomNum = Math.floor(1000 + Math.random() * 9000);
-                const licenseKey = `UTIL-KEY-${randomNum}`;
-                generatedKeys.push(licenseKey);
+    <div class="info-box">
+        <strong>💡 Informasi:</strong><br>
+        - Kode lisensi disimpan di Firebase Realtime Database<br>
+        - Path: <code>/licenses/[KODE_LISENSI]</code><br>
+        - Status awal: <code>active</code><br>
+        - Setelah digunakan: <code>used</code><br>
+        - Klik pada kode lisensi untuk copy ke clipboard
+    </div>
+</div>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<script>
+    // KONFIGURASI FIREBASE
+    const firebaseConfig = {
+        apiKey: "AIzaSyCMvemJTlb6fy5D_s8hL9wGWxZmsZ096jE",
+        authDomain: "drawing-match-ac69a.firebaseapp.com",
+        databaseURL: "https://drawing-match-ac69a-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "drawing-match-ac69a",
+        storageBucket: "drawing-match-ac69a.firebasestorage.app",
+        messagingSenderId: "22800670068",
+        appId: "1:22800670068:web:6bc373b99331c8e0bca021"
+    };
+
+    // Inisialisasi Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    // Password Admin (GANTI dengan password yang lebih aman)
+    const ADMIN_PASSWORD = "admin123";
+
+    // Variabel untuk menyimpan hasil
+    let generatedLicenses = [];
+
+    // Preview format kode lisensi
+    function previewFormat() {
+        const format = document.getElementById('licenseFormat').value;
+        const customFormatBox = document.getElementById('customFormatBox');
+        
+        if (format === 'CUSTOM') {
+            customFormatBox.style.display = 'block';
+            document.getElementById('formatPreview').textContent = 'Custom: PS4-2024-1234';
+        } else {
+            customFormatBox.style.display = 'none';
+            
+            let example = '';
+            switch(format) {
+                case 'UTIL-KEY-####':
+                    example = 'UTIL-KEY-1234';
+                    break;
+                case 'PS4-####-2024':
+                    example = 'PS4-1234-2024';
+                    break;
+                case 'TURNAMEN-#######':
+                    example = 'TURNAMEN-1234567';
+                    break;
+            }
+            document.getElementById('formatPreview').textContent = 'Contoh hasil: ' + example;
+        }
+    }
+
+    // Generate random number sesuai jumlah digit
+    function generateRandomNumber(digits) {
+        let number = '';
+        for (let i = 0; i < digits; i++) {
+            number += Math.floor(Math.random() * 10);
+        }
+        return number;
+    }
+
+    // Generate kode lisensi
+    function generateLicenseCode() {
+        const format = document.getElementById('licenseFormat').value;
+        const useUppercase = document.getElementById('useUppercase').checked;
+        
+        let code = '';
+        
+        switch(format) {
+            case 'UTIL-KEY-####':
+                code = `UTIL-KEY-${generateRandomNumber(4)}`;
+                break;
+            case 'PS4-####-2024':
+                code = `PS4-${generateRandomNumber(4)}-2024`;
+                break;
+            case 'TURNAMEN-#######':
+                code = `TURNAMEN-${generateRandomNumber(7)}`;
+                break;
+            case 'CUSTOM':
+                let custom = document.getElementById('customFormat').value;
+                // Ganti # dengan angka random
+                let hashCount = (custom.match(/#/g) || []).length;
+                let randomNums = generateRandomNumber(hashCount);
+                let customIndex = 0;
+                code = custom.replace(/#/g, () => randomNums[customIndex++]);
+                break;
+        }
+        
+        return useUppercase ? code.toUpperCase() : code;
+    }
+
+    // Cek apakah kode sudah ada di Firebase
+    async function checkLicenseExists(code) {
+        try {
+            const snapshot = await db.ref(`licenses/${code}`).once('value');
+            return snapshot.exists();
+        } catch (error) {
+            console.error("Error checking license:", error);
+            return false;
+        }
+    }
+
+    // Generate licences dan simpan ke Firebase
+    async function generateLicenses() {
+        // Verifikasi password admin
+        const password = document.getElementById('adminPassword').value;
+        if (password !== ADMIN_PASSWORD) {
+            showError("❌ Password admin salah!");
+            return;
+        }
+
+        const total = parseInt(document.getElementById('totalLicenses').value);
+        if (total < 1 || total > 100) {
+            showError("❌ Jumlah lisensi harus antara 1-100!");
+            return;
+        }
+
+        // Tampilkan loading
+        document.getElementById('btnGenerate').disabled = true;
+        document.getElementById('loadingIndicator').style.display = 'block';
+        document.getElementById('errorMessage').style.display = 'none';
+        document.getElementById('successMessage').style.display = 'none';
+        document.getElementById('resultSection').style.display = 'none';
+
+        try {
+            // Generate kode unik
+            const licenseCodes = [];
+            const seenCodes = new Set();
+
+            // Coba generate hingga mendapatkan kode unik
+            let attempts = 0;
+            while (licenseCodes.length < total && attempts < total * 10) {
+                const code = generateLicenseCode();
+                if (!seenCodes.has(code)) {
+                    const exists = await checkLicenseExists(code);
+                    if (!exists) {
+                        licenseCodes.push(code);
+                        seenCodes.add(code);
+                    }
+                }
+                attempts++;
             }
 
-            // Cek duplikat
-            const uniqueKeys = [...new Set(generatedKeys)];
+            if (licenseCodes.length < total) {
+                throw new Error(`Hanya bisa membuat ${licenseCodes.length} kode unik. Coba lagi.`);
+            }
 
             // Simpan ke Firebase
             const updates = {};
-            uniqueKeys.forEach(key => {
-                updates[`licenses/${key}`] = {
+            licenseCodes.forEach(code => {
+                updates[`licenses/${code}`] = {
                     status: "active",
-                    activated_at: null
+                    activated_at: null,
+                    created_at: new Date().toISOString()
                 };
             });
 
-            db.ref().update(updates)
-                .then(() => {
-                    let html = '<h3>✅ Lisensi Berhasil Dibuat!</h3>';
-                    html += '<table border="1" style="margin-top:20px; border-collapse:collapse;">';
-                    html += '<tr><th>No</th><th>Kode Lisensi</th><th>Status</th></tr>';
-                    
-                    uniqueKeys.forEach((key, index) => {
-                        html += `<tr>
-                            <td>${index + 1}</td>
-                            <td><code style="background:#f0f0f0; padding:5px;">${key}</code></td>
-                            <td style="color:green;">ACTIVE</td>
-                        </tr>`;
-                    });
+            await db.ref().update(updates);
 
-                    html += '</table>';
-                    resultDiv.innerHTML = html;
-                })
-                .catch(error => {
-                    resultDiv.innerHTML = `❌ Error: ${error.message}`;
-                    console.error(error);
-                });
+            // Tampilkan hasil
+            generatedLicenses = licenseCodes;
+            displayResults(licenseCodes);
+
+            // Tampilkan pesan sukses
+            document.getElementById('successMessage').innerHTML = `✅ Berhasil membuat ${licenseCodes.length} lisensi!`;
+            document.getElementById('successMessage').style.display = 'block';
+
+        } catch (error) {
+            console.error("Error:", error);
+            showError(`❌ Gagal membuat lisensi: ${error.message}`);
+        } finally {
+            // Sembunyikan loading
+            document.getElementById('loadingIndicator').style.display = 'none';
+            document.getElementById('btnGenerate').disabled = false;
         }
-    </script>
+    }
+
+    // Tampilkan hasil dalam tabel
+    function displayResults(codes) {
+        const tbody = document.getElementById('licenseTableBody');
+        tbody.innerHTML = '';
+        
+        document.getElementById('totalCreated').textContent = codes.length;
+        document.getElementById('activeCount').textContent = codes.length;
+        document.getElementById('generatedCount').textContent = codes.length;
+
+        codes.forEach((code, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${index + 1}</td>
+                <td>
+                    <span class="license-code" onclick="copyLicense('${code}', this)">
+                        ${code}
+                    </span>
+                </td>
+                <td><span style="color:green; font-weight:bold;">Active</span></td>
+                <td>
+                    <button onclick="copyLicense('${code}', this.previousElementSibling.querySelector('.license-code'))" style="background:#17a2b8; color:white; border:none; padding:5px 10px; border-radius:3px; cursor:pointer;">Copy</button>
+                </td>
+            `;
+            tbody.appendChild(row);
+        });
+
+        document.getElementById('resultSection').style.display = 'block';
+        
+        // Scroll ke hasil
+        document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Copy single license
+    async function copyLicense(code, element) {
+        try {
+            await navigator.clipboard.writeText(code);
+            element.classList.add('copied');
+            element.textContent = '✓ ' + code;
+            
+            setTimeout(() => {
+                element.classList.remove('copied');
+                element.textContent = code;
+            }, 2000);
+        } catch (error) {
+            // Fallback untuk browser lama
+            const textArea = document.createElement('textarea');
+            textArea.value = code;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            
+            element.classList.add('copied');
+            element.textContent = '✓ ' + code;
+            
+            setTimeout(() => {
+                element.classList.remove('copied');
+                element.textContent = code;
+            }, 2000);
+        }
+    }
+
+    // Copy semua lisensi
+    async function copyAllLicenses() {
+        if (generatedLicenses.length === 0) return;
+        
+        const allCodes = generatedLicenses.join('\n');
+        
+        try {
+            await navigator.clipboard.writeText(allCodes);
+            showSuccess("📋 Semua kode lisensi berhasil di-copy!");
+        } catch (error) {
+            showError("❌ Gagal copy. Gunakan tombol Download JSON.");
+        }
+    }
+
+    // Download sebagai JSON
+    function downloadLicenses() {
+        if (generatedLicenses.length === 0) return;
+        
+        const data = {
+            generated_at: new Date().toISOString(),
+            total: generatedLicenses.length,
+            licenses: generatedLicenses.map(code => ({
+                code: code,
+                status: "active",
+                activated_at: null
+            }))
+        };
+        
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `lisensi_${Date.now()}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        showSuccess("💾 File JSON berhasil didownload!");
+    }
+
+    // Tampilkan error
+    function showError(message) {
+        const errorDiv = document.getElementById('errorMessage');
+        errorDiv.innerHTML = message;
+        errorDiv.style.display = 'block';
+        
+        // Auto hide setelah 5 detik
+        setTimeout(() => {
+            errorDiv.style.display = 'none';
+        }, 5000);
+    }
+
+    // Tampilkan sukses
+    function showSuccess(message) {
+        const successDiv = document.getElementById('successMessage');
+        successDiv.innerHTML = message;
+        successDiv.style.display = 'block';
+        
+        // Auto hide setelah 5 detik
+        setTimeout(() => {
+            successDiv.style.display = 'none';
+        }, 5000);
+    }
+
+    // Inisialisasi saat halaman dimuat
+    document.addEventListener('DOMContentLoaded', function() {
+        previewFormat();
+        
+        // Tambahkan event listener untuk input custom format
+        document.getElementById('customFormat').addEventListener('input', previewFormat);
+        
+        // Tampilkan format default
+        console.log("Admin panel siap digunakan");
+    });
+</script>
+
 </body>
 </html>
